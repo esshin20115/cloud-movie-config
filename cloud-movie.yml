@@ -1,78 +1,15 @@
-server:
-  port: ${PORT:8090}
-   
-management:
-  security:
-    enabled: false
-     
 spring:
   application:
-    name: cloud-movie
-     
----
- 
-spring:
-  profiles: default
- 
-eureka:
-  instance:
-    instance-id: localhost:${server.port}
-    hostname: localhost
-    lease-renewal-interval-in-seconds: 5
-  client:
-    region: default
-    fetch-registry: true
-    registry-fetch-interval-seconds: 5
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-       
-server:
+    name: cloud-movie-localhost
   datasource:
     initialize: true
     platform: h2
-    url: jdbc:h2:mem:moviedb
-    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:moviedb;
     username: sa
     password: null
-    initial-size: 1
-    maximum-pool-size: 2
   h2:
     console:
       enabled: true
-string:
-  env: default
-  name: cloud
-   
-name: dtlabs
----
  
-spring:
-  profiles: dev
-   
-services:
-  datasource:
-    name: cloud-movie-db
-    initial-size: 1
-    maximum-pool-size: 2
-    max-wait-time: 3000
-     
-eureka:
-  instance:
-    instance-id: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
-    hostname: ${vcap.application.uris[0]}
-    non-secure-port: 80
-  client:
-    region: default
-    fetch-registry: false
-    register-with-eureka: false
-    service-url:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
- 
- 
- 
-string:
-  env: dev
-  name: cloud-dev
-   
-name: dtlabs-dev
+logging:
+    path: ../log/${spring.application.name}
